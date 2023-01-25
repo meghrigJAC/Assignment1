@@ -15,7 +15,7 @@ namespace Assignment1
                 Console.WriteLine("Welcome to \"Programming 2 - Assignment 1\"\n");
                 Console.WriteLine("Created by <YOUR NAME>\n");
                 Console.WriteLine("************************************************\n");
-                Console.WriteLine("Please choose from one of the following options:\n\t1 - Safest Living Area \n\t2 - Paint Job Estimator \n\t3 - Pennies for Pay \n\t4 - Rock, Paper and Scissors game \n\t5 - Quit");
+                Console.WriteLine("Please choose from one of the following options:\n\t1 - Print Pattern \n\t2 - Paint Job Estimator \n\t3 - Rent Prices \n\t4 - Rock, Paper and Scissors game \n\t5 - Quit");
 
                 bool valid = int.TryParse(Console.ReadLine(), out choice);
 
@@ -30,7 +30,8 @@ namespace Assignment1
                 switch (choice)
                 {
                     case 1:
-                        SafestLivingArea();
+                        //SafestLivingArea();
+                        PrintCSharp();
                         break;
 
                     case 2:
@@ -38,7 +39,8 @@ namespace Assignment1
                         break;
 
                     case 3:
-                        PenniesForPay();
+                       // PenniesForPay();
+                        RentPrices();
                         break;
 
                     case 4:
@@ -112,6 +114,29 @@ namespace Assignment1
 
         }
 
+
+        /**/
+
+        public static void PrintCSharp()
+        {
+            int SIZE = 10, ROWS = 5, CBORDER = 3, POUNDSTART = 6, POUNDEND=8 ;
+
+            for (int row = 0; row < ROWS; row++)
+            {
+                for (int column = 0; column < SIZE; column++)
+                {
+                    if (column == 0 || column == POUNDSTART || column == POUNDEND)
+                        Console.Write("* ");
+                    else if ((row == 0 || row == ROWS-1) && column <= CBORDER)
+                        Console.Write("* ");
+                    else if ((row == 1 || row == CBORDER) && column >= POUNDSTART-1)
+                        Console.Write("* ");
+                    else
+                        Console.Write("  ");
+                }
+                Console.WriteLine();
+            }
+        }
         /*	Problem #2: Paint Job Estimator 
            What the program does in your own words. 
             Tester: Bob Doe (student in class).    */
@@ -295,6 +320,82 @@ namespace Assignment1
             }
             Console.WriteLine("------------------------------------------------------------------------------");
 
+        }
+
+
+        /*	Problem #3:Rent Prices
+      What the program does in your own words. 
+       Tester: Bob Doe (student in class).    */
+
+
+        public static void RentPrices()
+        {
+            int numberOfYears;
+            decimal rentPrice;
+
+            numberOfYears = GetNumberOfYears();
+            rentPrice = GetRentPrice();
+
+            DisplayTable(numberOfYears, rentPrice);
+
+            Console.WriteLine("\nEnter a key to continue");
+            Console.ReadLine();
+        }
+        public static int GetNumberOfYears()
+        {
+            int numberOfYears;
+
+            Console.Write("Enter the number of years: ");
+            bool valid = int.TryParse(Console.ReadLine(), out numberOfYears);
+
+            while (!valid || numberOfYears < 1)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("Error. Number of years must not be less than 1 and should be an number. Enter the number of years: ");
+                Console.ForegroundColor = ConsoleColor.White;
+                valid = int.TryParse(Console.ReadLine(), out numberOfYears);
+            }
+
+            return numberOfYears;
+        }
+        public static decimal GetRentPrice()
+        {
+            decimal rentPrice;
+
+            Console.Write("Enter the rent price: ");
+            bool valid = decimal.TryParse(Console.ReadLine(), out rentPrice);
+
+            while (!valid || rentPrice < 1)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("Error. Price must greater than 0 and should be a decimal number. Enter the rent price: ");
+                Console.ForegroundColor = ConsoleColor.White;
+                valid = decimal.TryParse(Console.ReadLine(), out rentPrice);
+            }
+
+            return rentPrice;
+        }
+        public static void DisplayTable(int numberOfYears, decimal rentPrice)
+        {
+            int year = 2023;
+            decimal INCREASE_RATE = 2.3M;
+            decimal originalPrice = rentPrice;
+            decimal newPrice= originalPrice + originalPrice * INCREASE_RATE / 100;
+
+
+            Console.WriteLine($"-------------------------------------------------------------------------------------------------------------");
+            Console.WriteLine($"{"Year",-20} | {"Original price",-30} | {"New price", -30} | {"Increase", -30} ");
+
+            for (int i = 0; i < numberOfYears; i++)
+            {
+                Console.WriteLine($"-------------------------------------------------------------------------------------------------------------");
+                Console.WriteLine($"{year,-20} | {originalPrice,-30:c} | {newPrice, -30:c} | {originalPrice - rentPrice, -30:c}");
+                year += 1;
+                originalPrice= newPrice;
+                newPrice= newPrice + newPrice * INCREASE_RATE / 100;
+
+            }
+            Console.WriteLine($"-------------------------------------------------------------------------------------------------------------");
         }
 
 
