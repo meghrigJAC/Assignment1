@@ -34,7 +34,8 @@ namespace Assignment1
                         break;
 
                     case 2:
-                        PaintJobEstimator();
+                       // PaintJobEstimator();
+                        PrintJobEstimator();
                         break;
 
                     case 3:
@@ -112,6 +113,138 @@ namespace Assignment1
 
         }
 
+
+        /*	Problem #2: Print Job Estimator 
+          What the program does in your own words. 
+           Tester: Bob Doe (student in class).    */
+
+        const decimal MIN_SPOOL_PRICE = 35.00M;
+        const int GRAM_TO_KG = 1000;
+        public static void PrintJobEstimator()
+        {
+            int numberOfStudents, spoolsOfFilament, totalTime;
+            decimal pricePerSpool, printCost;
+            float totalWeight;
+
+            numberOfStudents = GetNumOfStudents();
+            pricePerSpool = GetPricePerSpool();
+            totalWeight = GetTotalWeight(numberOfStudents);
+            spoolsOfFilament = GetSpoolsOfFilament(totalWeight);
+            printCost = GetPrintCost( spoolsOfFilament, pricePerSpool);
+            totalTime = GetTotalHours(numberOfStudents);
+            PrintCost(totalWeight, spoolsOfFilament, pricePerSpool, printCost, totalTime);
+        }
+
+        public static int GetNumOfStudents()
+        {
+            int numberOfStudents;
+
+            Console.Write("Enter the number of students: ");
+            bool valid = int.TryParse(Console.ReadLine(), out numberOfStudents);
+
+            while (!valid || numberOfStudents < 1)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("Error. Number of students must not be less than 1. Enter the number of students: ");
+                Console.ForegroundColor = ConsoleColor.White;
+                valid = int.TryParse(Console.ReadLine(), out numberOfStudents);
+
+            }
+
+            return numberOfStudents;
+        }
+
+        public static decimal GetPricePerSpool()
+        {
+            decimal price;
+
+            Console.Write($"Enter the price of a spool of filament (minimum {MIN_SPOOL_PRICE:c}):");
+            bool valid = decimal.TryParse(Console.ReadLine(), out price);
+
+            while (!valid || price < MIN_SPOOL_PRICE)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write($"Error. Price of a spool of filament must not be less than {MIN_SPOOL_PRICE:c}. Enter the price of the spool of filament");
+                Console.ForegroundColor = ConsoleColor.White;
+                valid = decimal.TryParse(Console.ReadLine(), out price);
+
+            }
+            return price;
+        }
+
+        public static float GetTotalWeight(int numberOfStudents)
+        {
+            float totalWeight = 0, objectWeight;
+
+            for (int i = 0; i < numberOfStudents; i++)
+            {
+                Console.Write($"Student {i + 1}: Enter the weight in grams: ");
+                bool valid = float.TryParse(Console.ReadLine(), out objectWeight);
+
+                while (!valid || objectWeight < 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("Error, value must be above 0. Enter the weight in grams: ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    valid = float.TryParse(Console.ReadLine(), out objectWeight);
+                }
+
+                totalWeight += objectWeight;
+            }
+            return totalWeight;
+        }
+
+        public static int GetSpoolsOfFilament(float totalWeight)
+        {
+            double spools;
+
+            spools = Math.Ceiling(totalWeight / GRAM_TO_KG);
+
+            return (int)spools;
+        }
+
+        public static decimal GetPrintCost(int spoolsOfFilament, decimal pricePerSpool)
+        {
+            return spoolsOfFilament * pricePerSpool;
+        }
+
+        public static int GetTotalHours(int numberOfStudents)
+        {
+            int totalTime = 0, objectTime;
+
+            for (int i = 0; i < numberOfStudents; i++)
+            {
+                Console.Write($"Student {i + 1}: Enter the time in minutes: ");
+                bool valid = int.TryParse(Console.ReadLine(), out objectTime);
+
+                while (!valid || objectTime < 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("Error, value must be above 0. Enter the time in minutes: ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    valid = int.TryParse(Console.ReadLine(), out objectTime);
+                }
+
+                totalTime += objectTime;
+            }
+            totalTime = (int)Math.Ceiling((double)totalTime / (double)60);
+
+            return totalTime;
+        }
+
+        public static void PrintCost(float totalWeight, int spoolsOfFilament, decimal pricePerSpool, decimal printCost, int numberOfHours)
+        {
+            Console.WriteLine("ESTIMATED COST");
+            Console.WriteLine("-----------------");
+            Console.WriteLine($"{"Total Weight:",-40} {totalWeight:n2}");
+            Console.WriteLine($"{"Spools of filament:",-40} {spoolsOfFilament}");
+            Console.WriteLine($"{"Price per Spool:",-40} {pricePerSpool:c}");
+            Console.WriteLine($"{"Print cost:",-40} {printCost:c}");
+            Console.WriteLine($"{"Number of hours needed:",-40} {numberOfHours}");
+        }
+        
+        
+        
         /*	Problem #2: Paint Job Estimator 
            What the program does in your own words. 
             Tester: Bob Doe (student in class).    */
