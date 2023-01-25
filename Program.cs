@@ -15,7 +15,7 @@ namespace Assignment1
                 Console.WriteLine("Welcome to \"Programming 2 - Assignment 1\"\n");
                 Console.WriteLine("Created by <YOUR NAME>\n");
                 Console.WriteLine("************************************************\n");
-                Console.WriteLine("Please choose from one of the following options:\n\t1 - Print Pattern \n\t2 - Paint Job Estimator \n\t3 - Rent Prices \n\t4 - Rock, Paper and Scissors game \n\t5 - Quit");
+                Console.WriteLine("Please choose from one of the following options:\n\t1 - Print Pattern \n\t2 - 3D Printing Estimator \n\t3 - Rent Prices \n\t4 - Rock Paper Scissor \n\t5 - Quit");
 
                 bool valid = int.TryParse(Console.ReadLine(), out choice);
 
@@ -30,16 +30,14 @@ namespace Assignment1
                 switch (choice)
                 {
                     case 1:
-                        //SafestLivingArea();
                         PrintCSharp();
                         break;
 
                     case 2:
-                        PaintJobEstimator();
+                        PrintJobEstimator();
                         break;
 
                     case 3:
-                       // PenniesForPay();
                         RentPrices();
                         break;
 
@@ -51,75 +49,12 @@ namespace Assignment1
             while (choice != 5);
         }
 
-        /*	Problem #1: Safest Living Area 
-         	What the program does in your own words. 
-        	 Tester: Bob Doe (student in class).    */
 
-        public static void SafestLivingArea()
-        {
-            const int NUMBER_OF_REGIONS = 5;
-            int minIndex;
-
-            string[] regions = new string[NUMBER_OF_REGIONS] { "north", "south", "west", "east", "central" };
-            int[] regionAccidents = new int[NUMBER_OF_REGIONS];
-
-            for (int i = 0; i < NUMBER_OF_REGIONS; i++)
-            {
-                regionAccidents[i] = GetNumAccidents(regions[i]);
-            }
-
-            minIndex = FindLowestAccidentsArea(regionAccidents);
-
-            PrintData(regions, regionAccidents, minIndex);
-
-            Console.WriteLine("\nEnter a key to continue");
-            Console.ReadLine();
-        }
-        public static int GetNumAccidents(string region)
-        {
-            int accidentNumber;
-
-            Console.WriteLine($"How many automobile accidents were reported in the {region} region?");
-            bool valid = int.TryParse(Console.ReadLine(), out accidentNumber);
-
-            while (!valid || accidentNumber < 0)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Error! No negative numbers allowed. Please input a positive number: ");
-                valid = int.TryParse(Console.ReadLine(), out accidentNumber);
-                Console.ForegroundColor = ConsoleColor.White;
-            }
-
-            return accidentNumber;
-        }
-        public static int FindLowestAccidentsArea(int[] accidentsArray)
-        {
-            int min = int.MaxValue;
-            int minIndex = -1;
-
-            for (int i = 0; i < accidentsArray.Length; i++)
-            {
-                if (accidentsArray[i] < min)
-                {
-                    min = accidentsArray[i];
-                    minIndex = i;
-                }
-            }
-
-            return minIndex;
-        }
-        public static void PrintData(string[] regions, int[] accidentsArray, int lowestIndex)
-        {
-            Console.WriteLine($"The region with the lowest number of accidents is the {regions[lowestIndex]} region with {accidentsArray[lowestIndex]} accident(s).");
-
-        }
-
-
-        /**/
+        /*Problem 1 Print Pattern*/
 
         public static void PrintCSharp()
         {
-            int SIZE = 10, ROWS = 5, CBORDER = 3, POUNDSTART = 6, POUNDEND=8 ;
+            int SIZE = 10, ROWS = 5, CBORDER = 3, POUNDSTART = 6, POUNDEND = 8;
 
             for (int row = 0; row < ROWS; row++)
             {
@@ -127,9 +62,9 @@ namespace Assignment1
                 {
                     if (column == 0 || column == POUNDSTART || column == POUNDEND)
                         Console.Write("* ");
-                    else if ((row == 0 || row == ROWS-1) && column <= CBORDER)
+                    else if ((row == 0 || row == ROWS - 1) && column <= CBORDER)
                         Console.Write("* ");
-                    else if ((row == 1 || row == CBORDER) && column >= POUNDSTART-1)
+                    else if ((row == 1 || row == CBORDER) && column >= POUNDSTART - 1)
                         Console.Write("* ");
                     else
                         Console.Write("  ");
@@ -137,65 +72,58 @@ namespace Assignment1
                 Console.WriteLine();
             }
         }
-        /*	Problem #2: Paint Job Estimator 
-           What the program does in your own words. 
-            Tester: Bob Doe (student in class).    */
 
-        const int MINUMBER_OF_ROOMS = 1;
-        const decimal LABOUR_HOURLY_PAY = 30.00M, MIN_GALLON_PRICE = 40.00M;
-        const float SQUAREFEET_PER_GALLON = 225F;
-        public static void PaintJobEstimator()
+        /*	Problem #2: Print Job Estimator 
+          What the program does in your own words. 
+           Tester: Bob Doe (student in class).    */
+
+        const decimal MIN_SPOOL_PRICE = 35.00M;
+        const int GRAM_TO_KG = 1000;
+        public static void PrintJobEstimator()
         {
-            int numberOfRooms, gallonsNeeded;
-            decimal pricePerGallon, paintCost, totalLabourCost, totalCharges;
-            float totalArea, labourHoursRequired;
+            int numberOfStudents, spoolsOfFilament, totalTime;
+            decimal pricePerSpool, printCost;
+            float totalWeight;
 
-            numberOfRooms = GetNumRooms();
-            pricePerGallon = GetPricePerGallon();
-            totalArea = GetTotalArea(numberOfRooms);
-            gallonsNeeded = GetGallonsOfPaint(totalArea);
-            paintCost = GetPaintCost(gallonsNeeded, pricePerGallon);
-            labourHoursRequired = GetHoursRequired(totalArea);
-            totalLabourCost = GetTotalLabourCost(labourHoursRequired);
-            totalCharges = GetTotalCharges(paintCost, totalLabourCost);
-
-            PrintEstimatedCharges(totalArea, gallonsNeeded, pricePerGallon, paintCost, labourHoursRequired, totalLabourCost, totalCharges);
-
-            Console.WriteLine("\nEnter a key to continue");
-            Console.ReadLine();
-
+            numberOfStudents = GetNumberOfStudents();
+            pricePerSpool = GetPricePerSpool();
+            totalWeight = GetTotalWeight(numberOfStudents);
+            spoolsOfFilament = GetSpoolsOfFilament(totalWeight);
+            printCost = GetPrintCost(spoolsOfFilament, pricePerSpool);
+            totalTime = GetTotalHours(numberOfStudents);
+            PrintCost(totalWeight, spoolsOfFilament, pricePerSpool, printCost, totalTime);
         }
 
-        public static int GetNumRooms()
+        public static int GetNumberOfStudents()
         {
-            int numberOfRooms;
+            int numberOfStudents;
 
-            Console.Write("Enter the number of rooms to be painted: ");
-            bool valid = int.TryParse(Console.ReadLine(), out numberOfRooms);
+            Console.Write("Enter the number of students: ");
+            bool valid = int.TryParse(Console.ReadLine(), out numberOfStudents);
 
-            while (!valid || numberOfRooms < MINUMBER_OF_ROOMS)
+            while (!valid || numberOfStudents < 1)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write("Error. Number of rooms must not be less than 1. Enter the number of rooms to be painted: ");
+                Console.Write("Error. Number of students must not be less than 1. Enter the number of students: ");
                 Console.ForegroundColor = ConsoleColor.White;
-                valid = int.TryParse(Console.ReadLine(), out numberOfRooms);
+                valid = int.TryParse(Console.ReadLine(), out numberOfStudents);
 
             }
 
-            return numberOfRooms;
+            return numberOfStudents;
         }
 
-        public static decimal GetPricePerGallon()
+        public static decimal GetPricePerSpool()
         {
             decimal price;
 
-            Console.Write("Enter the price of the paint, per gallon (minimum $40):");
+            Console.Write($"Enter the price of a spool of filament (minimum {MIN_SPOOL_PRICE:c}):");
             bool valid = decimal.TryParse(Console.ReadLine(), out price);
 
-            while (!valid || price < MIN_GALLON_PRICE)
+            while (!valid || price < MIN_SPOOL_PRICE)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write($"Error. Price of a gallon of paint must not be less than {MIN_GALLON_PRICE:c}. Enter the price of the paint, per gallon (minimum $40):");
+                Console.Write($"Error. Price of a spool of filament must not be less than {MIN_SPOOL_PRICE:c}. Enter the price of the spool of filament");
                 Console.ForegroundColor = ConsoleColor.White;
                 valid = decimal.TryParse(Console.ReadLine(), out price);
 
@@ -203,123 +131,75 @@ namespace Assignment1
             return price;
         }
 
-        public static float GetTotalArea(int numRooms)
+        public static float GetTotalWeight(int numberOfStudents)
         {
-            float totalArea = 0, RoomSize;
+            float totalWeight = 0, objectWeight;
 
-            for (int i = 0; i < numRooms; i++)
+            for (int i = 0; i < numberOfStudents; i++)
             {
-                Console.Write($"Room {i + 1}: Enter the area of wall space in square feet: ");
-                bool valid = float.TryParse(Console.ReadLine(), out RoomSize);
+                Console.Write($"Student {i + 1}: Enter the weight in grams: ");
+                bool valid = float.TryParse(Console.ReadLine(), out objectWeight);
 
-                while (!valid || RoomSize < 0)
+                while (!valid || objectWeight < 0)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write("Error, value must be above 0. Enter the area of wall space in square feet: ");
+                    Console.Write("Error, value must be above 0. Enter the weight in grams: ");
                     Console.ForegroundColor = ConsoleColor.White;
-                    valid = float.TryParse(Console.ReadLine(), out RoomSize);
+                    valid = float.TryParse(Console.ReadLine(), out objectWeight);
                 }
 
-                totalArea += RoomSize;
+                totalWeight += objectWeight;
             }
-            return totalArea;
+            return totalWeight;
         }
 
-        public static int GetGallonsOfPaint(float totalArea)
+        public static int GetSpoolsOfFilament(float totalWeight)
         {
-            double gallons;
+            double spools;
 
-            gallons = Math.Ceiling(totalArea / SQUAREFEET_PER_GALLON);
+            spools = Math.Ceiling(totalWeight / GRAM_TO_KG);
 
-            return (int)gallons;
-        }
-        public static decimal GetPaintCost(int gallonsOfPaint, decimal pricePerGallon)
-        {
-            return gallonsOfPaint * pricePerGallon;
-        }
-        public static float GetHoursRequired(float totalArea)
-        {
-            return totalArea / SQUAREFEET_PER_GALLON;
-
-        }
-        public static decimal GetTotalLabourCost(float labourHoursRequired)
-        {
-            return (decimal)labourHoursRequired * LABOUR_HOURLY_PAY;
+            return (int)spools;
         }
 
-        public static decimal GetTotalCharges(decimal paintCost, decimal totalLabourCost)
+        public static decimal GetPrintCost(int spoolsOfFilament, decimal pricePerSpool)
         {
-            return paintCost + totalLabourCost;
+            return spoolsOfFilament * pricePerSpool;
         }
 
-        public static void PrintEstimatedCharges(float totalArea, int gallonsOfPaint, decimal pricePerGallon,
-               decimal paintCost, float labourHoursRequired, decimal totalLabourCost, decimal totalCharges)
+        public static int GetTotalHours(int numberOfStudents)
         {
-            Console.WriteLine("ESTIMATED CHARGES");
+            int totalTime = 0, objectTime;
+
+            for (int i = 0; i < numberOfStudents; i++)
+            {
+                Console.Write($"Student {i + 1}: Enter the time in minutes: ");
+                bool valid = int.TryParse(Console.ReadLine(), out objectTime);
+
+                while (!valid || objectTime < 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("Error, value must be above 0. Enter the time in minutes: ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    valid = int.TryParse(Console.ReadLine(), out objectTime);
+                }
+
+                totalTime += objectTime;
+            }
+            totalTime = (int)Math.Ceiling((double)totalTime / (double)60);
+
+            return totalTime;
+        }
+
+        public static void PrintCost(float totalWeight, int spoolsOfFilament, decimal pricePerSpool, decimal printCost, int numberOfHours)
+        {
+            Console.WriteLine("ESTIMATED COST");
             Console.WriteLine("-----------------");
-            Console.WriteLine($"{"Total area:",-40} {totalArea:n2}");
-            Console.WriteLine($"{"Gallons of paint:",-40} {gallonsOfPaint}");
-            Console.WriteLine($"{"Price per gallon:",-40} {pricePerGallon:c}");
-            Console.WriteLine($"{"Paint cost:",-40} {paintCost:c}");
-            Console.WriteLine($"{"Labour hours required:",-40} {labourHoursRequired:n2}");
-            Console.WriteLine($"{"Labour cost @{LABOUR_HOURLY_PAY}/h:",-40} {totalLabourCost:c}");
-            Console.WriteLine($"{"Total charges:",-40} {totalCharges:c}");
-
-
-        }
-
-
-
-
-        /*	Problem #3: Pennies for Pay
-              What the program does in your own words. 
-               Tester: Bob Doe (student in class).    */
-
-        public static void PenniesForPay()
-        {
-            int numberOfDays;
-
-            numberOfDays = GetNumberOfDays();
-            DisplayTable(numberOfDays);
-
-            Console.WriteLine("\nEnter a key to continue");
-            Console.ReadLine();
-        }
-        public static int GetNumberOfDays()
-        {
-            int numberOfDays;
-
-            Console.Write("Enter the number of days: ");
-            bool valid = int.TryParse(Console.ReadLine(), out numberOfDays);
-
-            while (!valid || numberOfDays < 1)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write("Error. Number of days must not be less than 1 and should be an number. Enter the number of days: ");
-                Console.ForegroundColor = ConsoleColor.White;
-                valid = int.TryParse(Console.ReadLine(), out numberOfDays);
-            }
-
-            return numberOfDays;
-        }
-        public static void DisplayTable(int numberOfDays)
-        {
-            double dailyPennies = 1;
-            double dailyDollars = 0.01;
-            double totalDollars = 0.01;
-            Console.WriteLine($"------------------------------------------------------------------------------");
-            Console.WriteLine($"{"Day",-20} | {"Earning that day",-30} | {"Total earnings to date"} ");
-
-            for (int i = 0; i < numberOfDays; i++)
-            {
-                Console.WriteLine("------------------------------------------------------------------------------");
-                Console.WriteLine($"{i + 1,-20} | {dailyPennies,-30} | {totalDollars:c}");
-                dailyPennies += dailyPennies;
-                dailyDollars += dailyDollars;
-                totalDollars += dailyDollars;
-            }
-            Console.WriteLine("------------------------------------------------------------------------------");
-
+            Console.WriteLine($"{"Total Weight:",-40} {totalWeight:n2}");
+            Console.WriteLine($"{"Spools of filament:",-40} {spoolsOfFilament}");
+            Console.WriteLine($"{"Price per Spool:",-40} {pricePerSpool:c}");
+            Console.WriteLine($"{"Print cost:",-40} {printCost:c}");
+            Console.WriteLine($"{"Number of hours needed:",-40} {numberOfHours}");
         }
 
 
@@ -399,9 +279,7 @@ namespace Assignment1
         }
 
 
-
-
-        /*	Problem #4: Rock, Paper and Scissors 
+        /*	Problem #4: Rock, Paper and Scissor 
          	What the program does in your own words. 
         	 Tester: Bob Doe (student in class).    */
 
@@ -430,7 +308,7 @@ namespace Assignment1
             }
             while (userChoice != 0);
 
-            Console.WriteLine("Thank you for playing Rock, Paper, Scissors.");
+            Console.WriteLine("Thank you for playing Rock Paper Scissor.");
 
             Console.WriteLine("\nEnter a key to continue");
             Console.ReadLine();
@@ -439,47 +317,6 @@ namespace Assignment1
         {
             Random choice = new Random();
             return choice.Next(MIN_CHOICE, MAX_CHOICE + 1);
-        }
-        public static void DetermineWinLoss(int userChoice, int computerChoice)
-        {
-            const int ROCK = 1, PAPER = 2, SCISSOR = 3;
-
-            if (userChoice == computerChoice)
-            {
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("Game Result: DRAW. Play again!\n");
-            }
-            else if (userChoice == ROCK && computerChoice == SCISSOR)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Game Result: You WIN! The rock smashes scissors.\n");
-            }
-            else if (userChoice == SCISSOR && computerChoice == PAPER)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Game Result: You WIN! Scissors cuts paper.\n");
-            }
-            else if (userChoice == PAPER && computerChoice == ROCK)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Game Result: You WIN! Paper wraps rock.\n");
-            }
-            else if (userChoice == SCISSOR && computerChoice == ROCK)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Game Result: You Lose! The rock smashes scissors.\n");
-            }
-            else if (userChoice == PAPER && computerChoice == SCISSOR)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Game Result: You Lose! Scissors cuts paper.\n");
-            }
-            else if (userChoice == ROCK && computerChoice == PAPER)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Game Result: You Lose! Paper wraps rock.\n");
-            }
-            Console.ForegroundColor = ConsoleColor.White;
         }
         public static int GetUserChoice()
         {
@@ -498,6 +335,48 @@ namespace Assignment1
 
             return userChoice;
         }
+        public static void DetermineWinLoss(int userChoice, int computerChoice)
+        {
+            const int ROCK = 1, PAPER = 2, SCISSOR = 3;
+
+            if (userChoice == computerChoice)
+            {
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("Game Result: DRAW. Play again!\n");
+            }
+            else if (userChoice == ROCK && computerChoice == SCISSOR)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Game Result: You WIN! The rock smashes scissor.\n");
+            }
+            else if (userChoice == SCISSOR && computerChoice == PAPER)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Game Result: You WIN! scissor cuts paper.\n");
+            }
+            else if (userChoice == PAPER && computerChoice == ROCK)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Game Result: You WIN! Paper wraps rock.\n");
+            }
+            else if (userChoice == SCISSOR && computerChoice == ROCK)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Game Result: You Lose! The rock smashes scissor.\n");
+            }
+            else if (userChoice == PAPER && computerChoice == SCISSOR)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Game Result: You Lose! scissor cuts paper.\n");
+            }
+            else if (userChoice == ROCK && computerChoice == PAPER)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Game Result: You Lose! Paper wraps rock.\n");
+            }
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+        
 
     }
 }
