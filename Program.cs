@@ -15,7 +15,7 @@ namespace Assignment1
                 Console.WriteLine("Welcome to \"Programming 2 - Assignment 1\"\n");
                 Console.WriteLine("Created by <YOUR NAME>\n");
                 Console.WriteLine("************************************************\n");
-                Console.WriteLine("Please choose from one of the following options:\n\t1 - Print Pattern \n\t2 - 3D Printing Estimator \n\t3 - Rent Prices \n\t4 - Rock Paper Scissor \n\t5 - Quit");
+                Console.WriteLine("Please choose from one of the following options:\n\t1 - 3D Printing Estimator \n\t2 - Rent Prices \n\t3 - Rock Paper Scissor \n\t4 - Payroll Calculator \n\t5 - Quit");
 
                 bool valid = int.TryParse(Console.ReadLine(), out choice);
 
@@ -30,19 +30,19 @@ namespace Assignment1
                 switch (choice)
                 {
                     case 1:
-                        PrintCSharp();
-                        break;
-
-                    case 2:
                         PrintJobEstimator();
                         break;
 
-                    case 3:
+                    case 2:
                         RentPrices();
                         break;
 
-                    case 4:
+                    case 3:
                         RPSGame();
+                        break;
+
+                    case 4:
+                        CalculateDisplayPayroll();
                         break;
                 }
             }
@@ -50,7 +50,7 @@ namespace Assignment1
         }
 
 
-        /*Problem 1 Print Pattern*/
+        /*Problem 1 Print Pattern*/ 
 
         public static void PrintCSharp()
         {
@@ -73,7 +73,7 @@ namespace Assignment1
             }
         }
 
-        /*	Problem #2: Print Job Estimator 
+        /*	Problem #1: Print Job Estimator 
           What the program does in your own words. 
            Tester: Bob Doe (student in class).    */
 
@@ -203,7 +203,7 @@ namespace Assignment1
         }
 
 
-        /*	Problem #3:Rent Prices
+        /*	Problem #2:Rent Prices
       What the program does in your own words. 
        Tester: Bob Doe (student in class).    */
 
@@ -279,7 +279,7 @@ namespace Assignment1
         }
 
 
-        /*	Problem #4: Rock, Paper and Scissor 
+        /*	Problem #3: Rock, Paper and Scissor 
          	What the program does in your own words. 
         	 Tester: Bob Doe (student in class).    */
 
@@ -376,7 +376,76 @@ namespace Assignment1
             }
             Console.ForegroundColor = ConsoleColor.White;
         }
-        
+
+        /*	Problem #4: Payroll Calculator
+                   What the program does in your own words. 
+                    Tester: Bob Doe (student in class).    */
+
+        const decimal MAX_REGULAR = 40.00m, MAX_OVERTIME=20.00m, OVERTIME_RATE=1.50m, DOUBLE_RATE=2.00M; 
+        public static void CalculateDisplayPayroll()
+        {
+            string[] employees = {"Marcus", "Ethan", "Philip", "Julien", "Naomie", "Rayane"};
+            decimal[] hourlyRate = { 16.75m, 23.95m, 18.18m, 21.00m, 24.50m, 25.71m };
+            decimal[] hoursWorked = {0.00m,22.00m,40.00m,51.00m,60.00m,71.80m };
+            decimal[] regularPay = new decimal[employees.Length];
+            decimal[] overtimePay = new decimal[employees.Length];
+            decimal[] doubleOvertimePay = new decimal[employees.Length];
+            decimal[] pay = new decimal[employees.Length];
+
+            CalculatePayroll(hourlyRate, hoursWorked, regularPay, overtimePay, doubleOvertimePay, pay);
+
+            for (int i=0;i<employees.Length;i++)
+            {
+                Console.WriteLine($"{employees[i]} {hoursWorked[i]} hours {hourlyRate[i]}/hr Regular Pay {regularPay[i]:c} Overtime Pay {overtimePay[i]:c} Double Overtime Pay {doubleOvertimePay[i]:c} Total Pay {pay[i]:c}");
+            }
+
+        }
+
+        public static void CalculatePayroll(decimal[] rate, decimal[] hours,
+            decimal[] regularPay, decimal[] overtimePay, decimal[] doubleOvertimePay, decimal[] pay)
+        {
+            
+
+            for (int i = 0; i < rate.Length; i++)
+            {
+                regularPay[i] = GetRegularPay(rate[i], hours[i]);
+                overtimePay[i] = GetOvertimePay(rate[i], hours[i] - MAX_REGULAR);
+                doubleOvertimePay[i] = GetDoubleOvertimePay(rate[i], hours[i] - (MAX_REGULAR+MAX_OVERTIME));
+                pay[i]= regularPay[i] + overtimePay[i] + doubleOvertimePay[i];
+            }
+             
+        }
+
+        public static decimal GetRegularPay(decimal rate, decimal hours)
+        {
+            decimal regularPay;
+            if (hours <= MAX_REGULAR)
+                regularPay = hours * rate;
+            else
+                regularPay = MAX_REGULAR * rate;
+
+            return regularPay;
+        }
+        public static decimal GetOvertimePay(decimal rate, decimal hours)
+        {
+            decimal overtimePay;
+            if (hours < 0)
+                overtimePay = 0.00m;
+            else if (hours <= MAX_OVERTIME)
+                overtimePay = hours * rate* OVERTIME_RATE;
+            else
+                overtimePay = MAX_OVERTIME * rate * OVERTIME_RATE;
+
+            return overtimePay;
+        }
+        public static decimal GetDoubleOvertimePay(decimal rate, decimal hours)
+        {
+            if (hours <= 0)
+                return 0.00m;
+            else
+                return hours * rate* DOUBLE_RATE;
+
+        }
 
     }
 }
