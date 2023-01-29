@@ -3,6 +3,13 @@ using System.Runtime.Serialization.Formatters;
 
 namespace Assignment1
 {
+    enum Choice
+    {
+        Rock = 1,
+        Paper = 2,
+        Scissor = 3,
+        Quit =4
+    }
     internal class Program
     {
         static void Main(string[] args)
@@ -284,48 +291,46 @@ namespace Assignment1
         	 Tester: Bob Doe (student in class).    */
 
         const int MIN_CHOICE = 1;
-        const int MAX_CHOICE = 3;
+        const int MAX_CHOICE = 4;
 
 
         public static void RPSGame()
         {
-            int computerChoice, userChoice;
-            string[] choices = { "Rock", "Paper", "Scissor" };
-
+            Choice computerChoice, userChoice;
             Console.WriteLine("What will you choose?");
 
             do
             {
-                userChoice = GetUserChoice();
+                 userChoice = GetUserChoice();
 
-                if (userChoice != 0)
+                if (userChoice != Choice.Quit)
                 {
-                    computerChoice = getComputerChoice();
-                    Console.WriteLine($"The computer has picked {choices[computerChoice - 1]}");
-                    Console.WriteLine($"The user has picked {choices[userChoice - 1]}");
+                    computerChoice = GetComputerChoice();
+                    Console.WriteLine($"The computer has picked {computerChoice}");
+                    Console.WriteLine($"The user has picked {userChoice}");
                     DetermineWinLoss(userChoice, computerChoice);
                 }
             }
-            while (userChoice != 0);
+            while (userChoice != Choice.Quit);
 
             Console.WriteLine("Thank you for playing Rock Paper Scissor.");
 
             Console.WriteLine("\nEnter a key to continue");
             Console.ReadLine();
         }
-        public static int getComputerChoice()
+        public static Choice GetComputerChoice()
         {
-            Random choice = new Random();
-            return choice.Next(MIN_CHOICE, MAX_CHOICE + 1);
+            Random computerChoice = new Random();
+            return (Choice)computerChoice.Next(MIN_CHOICE, MAX_CHOICE);
         }
-        public static int GetUserChoice()
+        public static Choice GetUserChoice()
         {
             int userChoice;
 
             Console.WriteLine("Choose the corresponding number of your choice. \n 1 - Rock \n 2 - Paper \n 3 - Scissor \n 4 - Quit");
             bool valid = int.TryParse(Console.ReadLine(), out userChoice);
 
-            while (!valid || userChoice < 0 || userChoice > 3)
+            while (!valid || userChoice < MIN_CHOICE || userChoice > MAX_CHOICE)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Error! Input not within the provided range, was left blank or was a character: Enter your choice again:");
@@ -333,43 +338,41 @@ namespace Assignment1
                 valid = int.TryParse(Console.ReadLine(), out userChoice);
             }
 
-            return userChoice;
+            return (Choice)userChoice;
         }
-        public static void DetermineWinLoss(int userChoice, int computerChoice)
+        public static void DetermineWinLoss(Choice userChoice, Choice computerChoice)
         {
-            const int ROCK = 1, PAPER = 2, SCISSOR = 3;
-
             if (userChoice == computerChoice)
             {
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("Game Result: DRAW. Play again!\n");
             }
-            else if (userChoice == ROCK && computerChoice == SCISSOR)
+            else if (userChoice == Choice.Rock && computerChoice == Choice.Scissor)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Game Result: You WIN! The rock smashes scissor.\n");
             }
-            else if (userChoice == SCISSOR && computerChoice == PAPER)
+            else if (userChoice == Choice.Scissor && computerChoice == Choice.Paper)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Game Result: You WIN! scissor cuts paper.\n");
             }
-            else if (userChoice == PAPER && computerChoice == ROCK)
+            else if (userChoice == Choice.Paper && computerChoice == Choice.Rock)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Game Result: You WIN! Paper wraps rock.\n");
             }
-            else if (userChoice == SCISSOR && computerChoice == ROCK)
+            else if (userChoice == Choice.Scissor && computerChoice == Choice.Rock)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Game Result: You Lose! The rock smashes scissor.\n");
             }
-            else if (userChoice == PAPER && computerChoice == SCISSOR)
+            else if (userChoice == Choice.Paper && computerChoice == Choice.Scissor)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Game Result: You Lose! scissor cuts paper.\n");
             }
-            else if (userChoice == ROCK && computerChoice == PAPER)
+            else if (userChoice == Choice.Rock && computerChoice == Choice.Paper)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Game Result: You Lose! Paper wraps rock.\n");
