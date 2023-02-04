@@ -7,8 +7,7 @@ namespace Assignment1
     {
         Rock = 1,
         Paper = 2,
-        Scissor = 3,
-        Quit =4
+        Scissor = 3
     }
     internal class Program
     {
@@ -303,7 +302,7 @@ namespace Assignment1
             {
                  userChoice = GetUserChoice();
 
-                if (userChoice != Choice.Quit)
+                if ((int)userChoice != 4)
                 {
                     computerChoice = GetComputerChoice();
                     Console.WriteLine($"The computer has picked {computerChoice}");
@@ -311,7 +310,7 @@ namespace Assignment1
                     DetermineWinLoss(userChoice, computerChoice);
                 }
             }
-            while (userChoice != Choice.Quit);
+            while ((int)userChoice != 4);
 
             Console.WriteLine("Thank you for playing Rock Paper Scissor.");
 
