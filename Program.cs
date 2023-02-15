@@ -14,6 +14,7 @@ namespace Assignment1
         static void Main(string[] args)
         {
             int choice;
+            const int MAX_CHOICE=5, MIN_CHOICE=1;
 
             do
             {
@@ -25,10 +26,10 @@ namespace Assignment1
 
                 bool valid = int.TryParse(Console.ReadLine(), out choice);
 
-                while (!valid || choice > 5 || choice < 1)
+                while (!valid || choice > MAX_CHOICE || choice < MIN_CHOICE)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Please choose from one of the above options (1 to 5).");
+                    Console.WriteLine($"Please choose from one of the above options ({MIN_CHOICE} to {MAX_CHOICE}).");
                     Console.ForegroundColor = ConsoleColor.White;
                     valid = int.TryParse(Console.ReadLine(), out choice);
                 }
@@ -52,39 +53,16 @@ namespace Assignment1
                         break;
                 }
             }
-            while (choice != 5);
+            while (choice != MAX_CHOICE);
         }
 
 
-        /*Problem 1 Print Pattern*/ 
-
-        public static void PrintCSharp()
-        {
-            int SIZE = 10, ROWS = 5, CBORDER = 3, POUNDSTART = 6, POUNDEND = 8;
-
-            for (int row = 0; row < ROWS; row++)
-            {
-                for (int column = 0; column < SIZE; column++)
-                {
-                    if (column == 0 || column == POUNDSTART || column == POUNDEND)
-                        Console.Write("* ");
-                    else if ((row == 0 || row == ROWS - 1) && column <= CBORDER)
-                        Console.Write("* ");
-                    else if ((row == 1 || row == CBORDER) && column >= POUNDSTART - 1)
-                        Console.Write("* ");
-                    else
-                        Console.Write("  ");
-                }
-                Console.WriteLine();
-            }
-        }
 
         /*	Problem #1: Print Job Estimator 
           What the program does in your own words. 
            Tester: Bob Doe (student in class).    */
 
-        const decimal MIN_SPOOL_PRICE = 35.00M;
-        const int GRAM_TO_KG = 1000;
+       
         public static void PrintJobEstimator()
         {
             int numberOfStudents, spoolsOfFilament, totalTime;
@@ -103,11 +81,12 @@ namespace Assignment1
         public static int GetNumberOfStudents()
         {
             int numberOfStudents;
+            const int MIN = 1;
 
             Console.Write("Enter the number of students: ");
             bool valid = int.TryParse(Console.ReadLine(), out numberOfStudents);
 
-            while (!valid || numberOfStudents < 1)
+            while (!valid || numberOfStudents < MIN)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("Error. Number of students must not be less than 1. Enter the number of students: ");
@@ -122,6 +101,7 @@ namespace Assignment1
         public static decimal GetPricePerSpool()
         {
             decimal price;
+            const decimal MIN_SPOOL_PRICE = 35.00M;
 
             Console.Write($"Enter the price of a spool of filament (minimum {MIN_SPOOL_PRICE:c}):");
             bool valid = decimal.TryParse(Console.ReadLine(), out price);
@@ -140,13 +120,14 @@ namespace Assignment1
         public static float GetTotalWeight(int numberOfStudents)
         {
             float totalWeight = 0, objectWeight;
+            const int MIN = 0;
 
             for (int i = 0; i < numberOfStudents; i++)
             {
                 Console.Write($"Student {i + 1}: Enter the weight in grams: ");
                 bool valid = float.TryParse(Console.ReadLine(), out objectWeight);
 
-                while (!valid || objectWeight < 0)
+                while (!valid || objectWeight < MIN)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write("Error, value must be above 0. Enter the weight in grams: ");
@@ -162,6 +143,8 @@ namespace Assignment1
         public static int GetSpoolsOfFilament(float totalWeight)
         {
             double spools;
+            const int GRAM_TO_KG = 1000;
+
 
             spools = Math.Ceiling(totalWeight / GRAM_TO_KG);
 
@@ -176,13 +159,14 @@ namespace Assignment1
         public static int GetTotalHours(int numberOfStudents)
         {
             int totalTime = 0, objectTime;
+            const double MINUTES = 60, MIN =0;
 
             for (int i = 0; i < numberOfStudents; i++)
             {
                 Console.Write($"Student {i + 1}: Enter the time in minutes: ");
                 bool valid = int.TryParse(Console.ReadLine(), out objectTime);
 
-                while (!valid || objectTime < 0)
+                while (!valid || objectTime < MIN)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write("Error, value must be above 0. Enter the time in minutes: ");
@@ -192,7 +176,7 @@ namespace Assignment1
 
                 totalTime += objectTime;
             }
-            totalTime = (int)Math.Ceiling((double)totalTime / (double)60);
+            totalTime = (int)Math.Ceiling(totalTime / MINUTES);
 
             return totalTime;
         }
@@ -275,7 +259,7 @@ namespace Assignment1
             for (int i = 0; i < numberOfYears; i++)
             {
                 Console.WriteLine($"-------------------------------------------------------------------------------------------------------------");
-                Console.WriteLine($"{year,-20} | {originalPrice,-30:c} | {newPrice, -30:c} | {originalPrice - rentPrice, -30:c}");
+                Console.WriteLine($"{year,-20} | {originalPrice,-30:c} | {newPrice, -30:c} | {newPrice - rentPrice, -30:c}");
                 year += 1;
                 originalPrice= newPrice;
                 newPrice= newPrice + newPrice * INCREASE_RATE / 100;
@@ -291,10 +275,9 @@ namespace Assignment1
 
         const int MIN_CHOICE = 1;
         const int MAX_CHOICE = 4;
-
-
         public static void RPSGame()
         {
+            const int QUIT = 4;
             Choice computerChoice, userChoice;
             Console.WriteLine("What will you choose?");
 
@@ -302,7 +285,7 @@ namespace Assignment1
             {
                  userChoice = GetUserChoice();
 
-                if ((int)userChoice != 4)
+                if ((int)userChoice != QUIT)
                 {
                     computerChoice = GetComputerChoice();
                     Console.WriteLine($"The computer has picked {computerChoice}");
@@ -310,7 +293,7 @@ namespace Assignment1
                     DetermineWinLoss(userChoice, computerChoice);
                 }
             }
-            while ((int)userChoice != 4);
+            while ((int)userChoice != QUIT);
 
             Console.WriteLine("Thank you for playing Rock Paper Scissor.");
 
@@ -383,7 +366,6 @@ namespace Assignment1
                    What the program does in your own words. 
                     Tester: Bob Doe (student in class).    */
 
-        const decimal MAX_REGULAR = 40.00m, MAX_OVERTIME=20.00m, OVERTIME_RATE=1.50m, DOUBLE_RATE=2.00M; 
         public static void CalculateDisplayPayroll()
         {
             string[] employees = {"Marcus", "Ethan", "Philip", "Julien", "Naomie", "Rayane"};
@@ -406,8 +388,8 @@ namespace Assignment1
         public static void CalculatePayroll(decimal[] rate, decimal[] hours,
             decimal[] regularPay, decimal[] overtimePay, decimal[] doubleOvertimePay, decimal[] pay)
         {
-            
 
+            const decimal MAX_REGULAR = 40.00m, MAX_OVERTIME = 20.00m;
             for (int i = 0; i < rate.Length; i++)
             {
                 regularPay[i] = GetRegularPay(rate[i], hours[i]);
@@ -420,6 +402,8 @@ namespace Assignment1
 
         public static decimal GetRegularPay(decimal rate, decimal hours)
         {
+            const decimal MAX_REGULAR = 40.00m;
+
             decimal regularPay;
             if (hours <= MAX_REGULAR)
                 regularPay = hours * rate;
@@ -430,6 +414,7 @@ namespace Assignment1
         }
         public static decimal GetOvertimePay(decimal rate, decimal hours)
         {
+            const decimal MAX_OVERTIME = 20.00m, OVERTIME_RATE = 1.50m;
             decimal overtimePay;
             if (hours < 0)
                 overtimePay = 0.00m;
@@ -442,6 +427,8 @@ namespace Assignment1
         }
         public static decimal GetDoubleOvertimePay(decimal rate, decimal hours)
         {
+            const decimal DOUBLE_RATE = 2.00M;
+
             if (hours <= 0)
                 return 0.00m;
             else
