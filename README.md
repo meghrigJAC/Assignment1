@@ -168,7 +168,7 @@ Write a method **RPSGame()** that:
 
 ​	**Use the method names, return types, argument names and argument types shown below**
 
-![](./images/Q4.PNG)
+![](./images/Q4.png)
 
 7. The last step the method executes should be a pause asking the user to press a key to continue.
 
