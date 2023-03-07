@@ -18,7 +18,7 @@ In this assignment you will create a program with a menu that will take the user
 
 2. Validate the user input: Accept only a number within the displayed options and print the message properly (in red).
 
-   ![image-20221228221504176](.\imgs\menu.png)
+   ![image-20221228221504176](./images/menu.PNG)
 
 3. When the user enters a valid input number, take the user to the corresponding problem.
 
@@ -92,7 +92,7 @@ Write a method **PrintJobEstimator()** that after taking the required informatio
 
            
 
-           ![](.\imgs\2output.png)
+           ![](./images/2output.PNG)
 
            
 
@@ -100,7 +100,7 @@ Write a method **PrintJobEstimator()** that after taking the required informatio
 
            **Use the method names, return types, argument names and argument types shown. below**
 
-           ![](.\imgs\Q2.png)
+           ![](./images/Q2.PNG)
 
 2. The last step the method executes should be a pause asking the user to press a key to continue.
 
@@ -132,13 +132,13 @@ Rent prices in Montreal are increasing by 2.3% this year. Write a program that c
 
          
 
-![](.\imgs\rent.png)
+![](./images/rent.PNG)
 
 > note if it crashes
 
 **Use the method names, return types, argument names and argument types shown below**
 
-![](.\imgs\3methods.png)
+![](./images/3methods.PNG)
 
 2. The last step the method executes should be a pause asking the user to press a key to continue.
 
@@ -162,13 +162,13 @@ Write a method **RPSGame()** that:
 6. Show the game result in the colors below. 
 7. Use enum.
 
-![](.\imgs\4.png)
+![](./images/4.PNG)
 
 
 
 ​	**Use the method names, return types, argument names and argument types shown below**
 
-![](.\imgs\Q4.png)
+![](./images/Q4.PNG)
 
 7. The last step the method executes should be a pause asking the user to press a key to continue.
 
@@ -204,7 +204,7 @@ The method should:
 
 2. Displays the payroll details as shown below.
 
-   ![](.\imgs\payrollOutput.PNG)
+   ![](./images/payrollOutput.PNG)
 
    
 
@@ -212,7 +212,7 @@ The method should:
 
    
 
-   ![](.\imgs\payrollmethods.png)
+   ![](./images/payrollmethods.PNG)
 
 3. The last step the method executes should be a pause asking the user to press a key to continue.
 
