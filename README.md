@@ -281,7 +281,7 @@ Consequently, each and every student should find a tester (a classmate) that tes
 |                                                              | `DetermineWinLoss` winner selection implemented correctly and enum used. (0.5 points) |
 | **Payroll Calculator** (1.5 points)                          | `CalculateDisplayPayroll()` implemented properly and displays the payroll details. (0.25 points) |
 |                                                              | `CalculatePayroll(..)` implemented correctly. (0.5 points)   |
-|                                                              | ``GetRegularPay(...)`, `GetOvertimePay(...)`, and GetDoubleOvertimePay(..)` implemented correctly. (0.75 points) |
+|                                                              | `GetRegularPay(...)`, `GetOvertimePay(...)`, and `GetDoubleOvertimePay(..)` implemented correctly. (0.75 points) |
 | **Last step of every method is a pause**                     | -0.5 to -1 points                                            |
 | **magic numbers, constants, naming conventions, comments **  | -0.25 to -1 points                                           |
 | **Compliance with method names, return types, parameters and their types** | -0.25 to -1 points                                           |
